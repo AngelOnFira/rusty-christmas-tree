@@ -1,0 +1,7 @@
+[package]
+name = "aidan-tree"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+spidev = "0.5.1"
