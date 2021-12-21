@@ -1,15 +1,6 @@
-[package]
-name = "aidan-tree"
-version = "0.1.0"
-edition = "2021"
-
-[features]
-default = ["visualize"]
-visualize = ["nannou"]
-pi = []
-
-[dependencies]
-spidev = "0.5.1"
-rand = "0.8.4"
-
-nannou = { version="0.18", optional = true }
+[workspace]
+members = [
+    "tree-script",
+    "tree-writer",
+    "tree-visualize",
+]

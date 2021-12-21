@@ -1,8 +1,7 @@
 use nannou::{color, prelude::*};
 
-use aidan_tree::render::build_array;
-
-use aidan_tree::FRAME_RATE;
+use tree_writer::render::build_array;
+use tree_writer::FRAME_RATE;
 
 fn main() {
     // let loop_mode = LoopMode::rate_fps(FRAME_RATE as usize);

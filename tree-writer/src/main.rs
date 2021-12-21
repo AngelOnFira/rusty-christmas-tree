@@ -1,4 +1,4 @@
-use aidan_tree::FRAME_RATE;
+use tree_writer::FRAME_RATE;
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
 use std::{io, thread, time::Duration};
 
