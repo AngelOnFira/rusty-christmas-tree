@@ -1,3 +1,4 @@
+use aidan_tree::FRAME_RATE;
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
 use std::{io, thread, time::Duration};
 
@@ -16,8 +17,6 @@ fn create_spi() -> io::Result<Spidev> {
     Ok(spi)
 }
 
-
-
 fn full_duplex(spi: &mut Spidev, tx_buf: [u8; 4500]) -> io::Result<()> {
     let mut rx_buf: [u8; 4500] = [0; 4500];
 
@@ -34,7 +33,7 @@ fn main() {
     let mut tick = 0;
 
     loop {
-        thread::sleep(Duration::from_millis(300));
+        thread::sleep(Duration::from_millis(1000 / FRAME_RATE));
         let tx_buf = build_array(tick);
         full_duplex(&mut spi, tx_buf).unwrap();
         tick += 1;

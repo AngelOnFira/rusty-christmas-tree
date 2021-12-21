@@ -2,11 +2,30 @@ use nannou::{color, prelude::*};
 
 use aidan_tree::render::build_array;
 
+use aidan_tree::FRAME_RATE;
+
 fn main() {
-    nannou::sketch(view).run();
+    // let loop_mode = LoopMode::rate_fps(FRAME_RATE as usize);
+    // nannou::app(model).update(update).loop_mode(loop_mode).run();
+
+    nannou::app(model).update(update).run();
 }
 
-fn view(app: &App, frame: Frame) {
+struct Model {
+    _window: window::Id,
+}
+
+fn model(app: &App) -> Model {
+    let _window = app.new_window().view(view).build().unwrap();
+    Model { _window }
+}
+
+fn update(_app: &App, _model: &mut Model, _update: Update) {
+    // Sleep for the FRAME_RATE
+    std::thread::sleep(std::time::Duration::from_millis(1000 / FRAME_RATE));
+}
+
+fn view(app: &App, _model: &Model, frame: Frame) {
     // Begin drawing
     let draw = app.draw();
 
@@ -14,7 +33,7 @@ fn view(app: &App, frame: Frame) {
     draw.background().color(BLACK);
 
     let render = build_array(frame.nth());
-    let COLUMN_HEIGHT = 75;
+    let column_height = 75;
 
     // Draw a 20x75 grid of rectangles that are each 5x5 pixels. The colour of
     // each rectangle is determined by each window of 3 values in the array. The
@@ -35,7 +54,7 @@ fn view(app: &App, frame: Frame) {
             let mut y = pixel / 3 % 20;
             // If we're on an odd column, flip the y direction
             if pixel % 2 == 0 {
-                y = COLUMN_HEIGHT - y;
+                y = column_height - y;
             }
 
             draw.rect()
