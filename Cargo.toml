@@ -1,5 +1,8 @@
 [workspace]
+resolver = "2"
 members = [
     "tree-writer",
-    "tree-visualize",
+    "tree-visualizer",
+    "tree-frontend",
+    "tree-backend",
 ]
