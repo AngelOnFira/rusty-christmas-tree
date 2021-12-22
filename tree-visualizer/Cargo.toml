@@ -7,5 +7,5 @@ edition = "2021"
 
 [dependencies]
 nannou = "0.18"
-tree-writer = { path = "../tree-writer" }
+tree-writer = { path = "../tree-writer", features = ["visualizer"] }
 tree-data-schema = { path = "../tree-data-schema" }

@@ -3,6 +3,10 @@ name = "tree-writer"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+default = ["spidev"]
+visualizer = []
+
 [lib]
 name = "tree_writer"
 path = "src/lib.rs"
@@ -12,7 +16,7 @@ name = "writerbin"
 path = "src/bin.rs"
 
 [dependencies]
-spidev = "0.5.1"
+spidev = { version = "0.5.1", optional = true }
 rand = "0.8.4"
 
 tree-data-schema = { path = "../tree-data-schema" }
