@@ -1,7 +1,7 @@
 use nannou::{color, prelude::*};
 
 use tree_data_schema::FRAME_RATE;
-use tree_writer::render::build_array;
+use tree_writer::renderers::build_array;
 
 fn main() {
     // let loop_mode = LoopMode::rate_fps(FRAME_RATE as usize);
@@ -32,7 +32,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
     // Clear the background to black.
     draw.background().color(BLACK);
 
-    let render = build_array(frame.nth());
+    let tree_canvas = build_array(frame.nth());
     let column_height = 75;
 
     // Draw a 20x75 grid of rectangles that are each 5x5 pixels. The colour of
@@ -41,10 +41,10 @@ fn view(app: &App, model: &Model, frame: Frame) {
     // blue.
 
     // Iterate over half the columns
-    for pixel in 0..render.len() / 3 {
-        let x = pixel / 75;
+    for (i, pixel) in tree_canvas.get_canvas().iter().enumerate() {
+        let x = i / 75;
 
-        let mut y = pixel % 75;
+        let mut y = i % 75;
         // If we're on an odd column, flip the y direction
         if x % 2 == 0 {
             y = column_height - y;
@@ -57,11 +57,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
                 y as f32 * model.dim * 1.5 - 300.0,
             )
             .w_h(model.dim as f32, model.dim as f32)
-            .color(color::rgb(
-                render[pixel * 3 + 0],
-                render[pixel * 3 + 1],
-                render[pixel * 3 + 2],
-            ));
+            .color(color::rgb(pixel.r, pixel.g, pixel.b));
     }
 
     // Write the result of our drawing to the window's frame.
