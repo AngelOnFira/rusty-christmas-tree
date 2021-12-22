@@ -28,7 +28,7 @@ impl TreeCanvas {
             panic!("Tried to set pixel at y={}, while y is max 75", y);
         }
 
-        self.pixels[y * 20 + x] = pixel;
+        self.pixels[x * 75 + y] = pixel;
     }
 
     pub fn get_pixel(&self, x: usize, y: usize) -> Pixel {
@@ -39,7 +39,7 @@ impl TreeCanvas {
             panic!("Tried to get pixel at y={}, while y is max 75", y);
         }
 
-        self.pixels[y * 20 + x]
+        self.pixels[x * 75 + y]
     }
 
     pub fn get_canvas(&self) -> &[Pixel; 1500] {

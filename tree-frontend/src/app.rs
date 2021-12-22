@@ -36,19 +36,19 @@ pub fn app() -> Html {
     html! {
         <>
             <h1>{ "Tree Patterns" }</h1>
-            <div>
-                {
-                    renderers.into_iter().map(|r| {
-                        let renderer = r.clone();
-                        html! {
-                            <>
-                            <RendererButton renderer={renderer} on_click={on_video_select.clone()} />
-                            </>
-                        }
-                    }).collect::<Html>()
-                }
+            // <div>
+            //     {
+            //         renderers.into_iter().map(|r| {
+            //             let renderer = r.clone();
+            //             html! {
+            //                 <>
+            //                 <RendererButton renderer={renderer} on_click={on_video_select.clone()} />
+            //                 </>
+            //             }
+            //         }).collect::<Html>()
+            //     }
 
-            </div>
+            // </div>
         </>
     }
 }

@@ -2,6 +2,7 @@ use tree_data_schema::Renderers;
 
 use self::tree_canvas::{Pixel, TreeCanvas};
 
+// Add a new renderer as a module here with the name you gave it
 pub mod red_wave;
 pub mod template;
 
