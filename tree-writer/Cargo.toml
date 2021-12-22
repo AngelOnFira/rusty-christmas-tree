@@ -13,3 +13,5 @@ edition = "2021"
 [dependencies]
 spidev = "0.5.1"
 rand = "0.8.4"
+
+mun_runtime = "0.3.0"

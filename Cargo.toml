@@ -1,6 +1,5 @@
 [workspace]
 members = [
-    "tree-script",
     "tree-writer",
     "tree-visualize",
 ]
