@@ -1,3 +1,5 @@
+use std::cmp::min;
+
 use super::{Pixel, TreeCanvas};
 
 // Name: <Name for this renderer>
@@ -10,11 +12,11 @@ pub fn draw(tick: u64) -> TreeCanvas {
     for y in 0..75 {
         for x in 0..20 {
             let this_pixel = Pixel {
-                r: x * y,
-                g: x * y,
-                b: x * y,
+                r: min(254, x * y) as u8,
+                g: 20 + (tick as u8 % 40) * 3,
+                b: 20 + (tick as u8 % 60) * 2,
             };
-            canvas.set_pixel(x as usize, y as usize, this_pixel)
+            canvas.set_pixel(x, y, this_pixel)
         }
     }
 
