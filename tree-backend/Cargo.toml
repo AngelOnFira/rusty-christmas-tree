@@ -9,4 +9,4 @@ edition = "2021"
 tokio = { version = "1", features = ["full"] }
 warp = "0.3"
 
-tree-writer = { path = "../tree-writer" }
+tree-data-schema = { path = "../tree-data-schema" }

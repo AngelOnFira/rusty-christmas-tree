@@ -2607,8 +2607,16 @@ name = "tree-backend"
 version = "0.1.0"
 dependencies = [
  "tokio",
- "tree-writer",
+ "tree-data-schema",
  "warp",
+]
+
+[[package]]
+name = "tree-data-schema"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -2617,7 +2625,7 @@ version = "0.1.0"
 dependencies = [
  "reqwasm",
  "serde",
- "tree-writer",
+ "tree-data-schema",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "web-sys",
@@ -2629,6 +2637,7 @@ name = "tree-visualizer"
 version = "0.1.0"
 dependencies = [
  "nannou",
+ "tree-data-schema",
  "tree-writer",
 ]
 
@@ -2637,9 +2646,8 @@ name = "tree-writer"
 version = "0.1.0"
 dependencies = [
  "rand 0.8.4",
- "serde",
- "serde_json",
  "spidev",
+ "tree-data-schema",
 ]
 
 [[package]]

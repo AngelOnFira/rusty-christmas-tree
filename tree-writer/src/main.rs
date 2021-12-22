@@ -1,6 +1,6 @@
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
 use std::{io, thread, time::Duration};
-use tree_writer::{Renderers, FRAME_RATE};
+use tree_data_schema::{Renderers, FRAME_RATE};
 
 // use mun_runtime::{invoke_fn, RuntimeBuilder};
 

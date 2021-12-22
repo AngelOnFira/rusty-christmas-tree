@@ -3,11 +3,6 @@ name = "tree-writer"
 version = "0.1.0"
 edition = "2021"
 
-# [features]
-# default = ["visualize"]
-# visualize = ["nannou"]
-# pi = []
-
 [lib]
 name = "tree_writer"
 path = "src/lib.rs"
@@ -16,12 +11,10 @@ path = "src/lib.rs"
 name = "writerbin"
 path = "src/bin.rs"
 
-
 [dependencies]
 spidev = "0.5.1"
 rand = "0.8.4"
 
-serde_json = "1.0"
-serde = { version = "1.0", features = ["derive"] }
+tree-data-schema = { path = "../tree-data-schema" }
 
 # mun_runtime = "0.3.0"

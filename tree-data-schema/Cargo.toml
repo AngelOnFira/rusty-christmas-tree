@@ -1,11 +1,10 @@
 [package]
-name = "tree-visualizer"
+name = "tree-data-schema"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-nannou = "0.18"
-tree-writer = { path = "../tree-writer" }
-tree-data-schema = { path = "../tree-data-schema" }
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }

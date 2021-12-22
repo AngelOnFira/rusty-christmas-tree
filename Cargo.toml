@@ -5,4 +5,5 @@ members = [
     "tree-visualizer",
     "tree-frontend",
     "tree-backend",
+    "tree-data-schema",
 ]

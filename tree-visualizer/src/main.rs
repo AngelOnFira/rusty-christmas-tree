@@ -1,7 +1,7 @@
 use nannou::{color, prelude::*};
 
+use tree_data_schema::FRAME_RATE;
 use tree_writer::render::build_array;
-use tree_writer::FRAME_RATE;
 
 fn main() {
     // let loop_mode = LoopMode::rate_fps(FRAME_RATE as usize);
