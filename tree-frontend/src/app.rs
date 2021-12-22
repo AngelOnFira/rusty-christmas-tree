@@ -3,7 +3,7 @@ use tree_data_schema::{Renderer, RendererStrings};
 use yew::prelude::*;
 
 #[function_component(App)]
-fn app() -> Html {
+pub fn app() -> Html {
     let renderers = use_state(|| vec![]);
     {
         let renderers = renderers.clone();
@@ -27,7 +27,6 @@ fn app() -> Html {
     }
 
     let selected_renderer = use_state(|| None);
-
 
     let on_video_select = {
         let selected_renderer = selected_renderer.clone();

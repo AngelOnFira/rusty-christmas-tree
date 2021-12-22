@@ -11,12 +11,13 @@ fn main() {
 }
 
 struct Model {
-    _window: window::Id,
+    window: window::Id,
+    dim: f32,
 }
 
 fn model(app: &App) -> Model {
-    let _window = app.new_window().view(view).build().unwrap();
-    Model { _window }
+    let window = app.new_window().view(view).build().unwrap();
+    Model { window, dim: 5.0 }
 }
 
 fn update(_app: &App, _model: &mut Model, _update: Update) {
@@ -24,11 +25,11 @@ fn update(_app: &App, _model: &mut Model, _update: Update) {
     std::thread::sleep(std::time::Duration::from_millis(1000 / FRAME_RATE));
 }
 
-fn view(app: &App, _model: &Model, frame: Frame) {
+fn view(app: &App, model: &Model, frame: Frame) {
     // Begin drawing
     let draw = app.draw();
 
-    // Clear the background to blue.
+    // Clear the background to black.
     draw.background().color(BLACK);
 
     let render = build_array(frame.nth());
@@ -39,32 +40,28 @@ fn view(app: &App, _model: &Model, frame: Frame) {
     // first value is the red, the second is the green, and the third is the
     // blue.
 
-    let dim = 15.0;
+    // Iterate over half the columns
+    for pixel in 0..render.len() / 3 {
+        let x = pixel / 75;
 
-    // Iterate over two halfs of the output
-    for side in 0..2 {
-        // Get the lenght of one half
-        let len_half = render.len() / 3 / 2;
-
-        // Iterate over half the columns
-        for pixel in side * len_half..(side + 1) * len_half {
-            let x = pixel / 3 / 20;
-
-            let mut y = pixel / 3 % 20;
-            // If we're on an odd column, flip the y direction
-            if pixel % 2 == 0 {
-                y = column_height - y;
-            }
-
-            draw.rect()
-                .x_y(x as f32 * dim - 200.0, y as f32 * dim - 200.0)
-                .w_h(dim as f32, dim as f32)
-                .color(color::rgb(
-                    render[pixel * 3 + 0],
-                    render[pixel * 3 + 1],
-                    render[pixel * 3 + 2],
-                ));
+        let mut y = pixel % 75;
+        // If we're on an odd column, flip the y direction
+        if x % 2 == 0 {
+            y = column_height - y;
         }
+
+        // TODO: Make the offsets based on the window size
+        draw.rect()
+            .x_y(
+                x as f32 * model.dim * 3.0 - 200.0,
+                y as f32 * model.dim * 1.5 - 300.0,
+            )
+            .w_h(model.dim as f32, model.dim as f32)
+            .color(color::rgb(
+                render[pixel * 3 + 0],
+                render[pixel * 3 + 1],
+                render[pixel * 3 + 2],
+            ));
     }
 
     // Write the result of our drawing to the window's frame.
