@@ -43,12 +43,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
     // Iterate over half the columns
     for (i, pixel) in tree_canvas.get_canvas().iter().enumerate() {
         let x = i / 75;
-
-        let mut y = i % 75;
-        // If we're on an odd column, flip the y direction
-        if x % 2 == 0 {
-            y = column_height - y;
-        }
+        let y = i % 75;
 
         // TODO: Make the offsets based on the window size
         draw.rect()

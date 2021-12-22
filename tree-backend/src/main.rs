@@ -6,7 +6,7 @@ use tree_data_schema::{renderer_strings, Renderer, RendererStrings, Renderers};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let current_renderer = Arc::new(Mutex::new(Renderers::RedLines));
+    let current_renderer = Arc::new(Mutex::new(Renderers::RedWave));
 
     let renderers = warp::path!("renderers").map(move || {
         warp::reply::json({

@@ -1,5 +1,9 @@
 use super::{Pixel, TreeCanvas};
 
+// Name: Red Wave
+// Description: A basic red wave across the screen
+// Author: Forest Anderson
+
 pub fn draw(tick: u64) -> TreeCanvas {
     let mut canvas = TreeCanvas::new();
 

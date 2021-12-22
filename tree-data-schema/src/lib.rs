@@ -6,13 +6,15 @@ pub const FRAME_RATE: u64 = 20;
 
 #[derive(Serialize, Deserialize, Clone, Copy, PartialEq, Eq)]
 pub enum Renderers {
-    RedLines,
+    RedWave,
+    Template,
 }
 
 impl fmt::Display for Renderers {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Renderers::RedLines => write!(f, "Red Lines"),
+            Renderers::RedWave => write!(f, "Red Lines"),
+            Renderers::Template => write!(f, "Template"),
         }
     }
 }
@@ -29,7 +31,7 @@ pub struct RendererStrings {
 }
 
 pub fn renderer_strings() -> Vec<Renderer> {
-    let renderers = [Renderers::RedLines];
+    let renderers = [Renderers::RedWave];
 
     renderers
         .iter()
