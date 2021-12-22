@@ -1,6 +1,6 @@
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
 use std::{io, thread, time::Duration};
-use tree_writer::FRAME_RATE;
+use tree_writer::{Renderers, FRAME_RATE};
 
 // use mun_runtime::{invoke_fn, RuntimeBuilder};
 
@@ -45,10 +45,15 @@ fn main() {
 
     let mut tick = 0;
 
+    let renderer = Renderers::RedLines;
+
     loop {
         thread::sleep(Duration::from_millis(1000 / FRAME_RATE));
 
-        let tx_buf = build_array(tick);
+        let tx_buf = match renderer {
+            Renderers::RedLines => build_array(tick),
+        };
+
         full_duplex(&mut spi, tx_buf).unwrap();
         tick += 1;
     }
