@@ -35,3 +35,45 @@ now. Now, you can start working in the `mod.rs` file in the new renderer folder.
 <p align="center">
     <img src="images/mario.gif" width="500" />
 </p>
+
+## Architecture
+
+### Physical Tree
+
+The physical tree is running on a Raspberry Pi Pico. There are 20 (actually 19)
+strips running, creating 19x75 LED grid. You send data to the LED strings using
+`spidev`, and send 4500 8-bit numbers for each frame. 20 frames can be drawn per
+second. The light indexes on the tree are as follows:
+
+```
+3 4 9
+2 5 8
+1 6 7
+```
+
+### tree-writer
+
+This crate is where the different "renderers" are implemented. A renderer is
+just a module that implements a draw function, and returns a `TreeCanvas`. In
+this function, you can set any `Pixel{r: u8, g: u8, b: u8}` on the `TreeCanvas`.
+
+### tree-visualizer
+
+This crate uses [Nannou] to visualize different `renderers`. It renders at the
+same speed (I think:tm:) and orientation that will be displayed on the tree.
+
+### tree-backend
+
+### tree-frontend
+
+### tree-script
+
+This was an attempt to use the Mun scripting language as the backend for drawing
+to the canvas. Currently, this isn't working, but if an MVP is made, then it
+could be easier to write with, and hot reloadable as well.
+
+[Nannou]: https://github.com/nannou-org/nannou
+
+<p align="center">
+    <img src="images/snow.gif" width="500" />
+</p>
