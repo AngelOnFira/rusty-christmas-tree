@@ -1,4 +1,4 @@
-use std::fmt;
+use std::fmt::{self, write};
 
 use serde::{Deserialize, Serialize};
 
@@ -9,6 +9,7 @@ pub enum Renderers {
     RedWave,
     Template,
     Snow,
+    EnderLogo,
 }
 
 impl fmt::Display for Renderers {
@@ -17,6 +18,7 @@ impl fmt::Display for Renderers {
             Renderers::RedWave => write!(f, "Red Lines"),
             Renderers::Template => write!(f, "Template"),
             Renderers::Snow => write!(f, "Snow"),
+            Renderers::EnderLogo => write!(f, "Ender Logo")
         }
     }
 }
