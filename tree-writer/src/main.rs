@@ -5,7 +5,9 @@ use tree_data_schema::{Renderers, FRAME_RATE};
 // use mun_runtime::{invoke_fn, RuntimeBuilder};
 
 mod renderers;
-use crate::renderers::{red_wave, snow, template, tree_canvas::TreeCanvas};
+use crate::renderers::{
+    ender_logo, rainbow_wave, red_wave, snow, space_fight, template, tree_canvas::TreeCanvas,
+};
 
 fn create_spi() -> io::Result<Spidev> {
     let mut spi = Spidev::open("/dev/spidev0.0")?;
@@ -56,6 +58,9 @@ fn main() {
             Renderers::RedWave => red_wave::draw(tick),
             Renderers::Template => template::draw(tick),
             Renderers::Snow => snow::draw(tick),
+            Renderers::EnderLogo => ender_logo::draw(tick),
+            Renderers::SpaceFight => space_fight::draw(tick),
+            Renderers::RainbowWave => rainbow_wave::draw(tick),
         };
 
         full_duplex(&mut spi, tree_canvas).unwrap();

@@ -7,7 +7,6 @@ pub mod ender_logo;
 pub mod rainbow_wave;
 pub mod red_wave;
 pub mod snow;
-pub mod ender_logo;
 pub mod space_fight;
 pub mod template;
 
