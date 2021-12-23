@@ -5,7 +5,7 @@ use tree_data_schema::{Renderers, FRAME_RATE};
 // use mun_runtime::{invoke_fn, RuntimeBuilder};
 
 mod renderers;
-use crate::renderers::{red_wave, template, tree_canvas::TreeCanvas};
+use crate::renderers::{red_wave, snow, template, tree_canvas::TreeCanvas};
 
 fn create_spi() -> io::Result<Spidev> {
     let mut spi = Spidev::open("/dev/spidev0.0")?;
@@ -46,14 +46,16 @@ fn main() {
 
     let mut tick = 0;
 
-    let renderer = Renderers::Template;
+    let renderer = Renderers::Snow;
 
     loop {
         thread::sleep(Duration::from_millis(1000 / FRAME_RATE));
 
+        // Add your enum variant here (and remember to import it above)
         let tree_canvas: TreeCanvas = match renderer {
             Renderers::RedWave => red_wave::draw(tick),
             Renderers::Template => template::draw(tick),
+            Renderers::Snow => snow::draw(tick),
         };
 
         full_duplex(&mut spi, tree_canvas).unwrap();
