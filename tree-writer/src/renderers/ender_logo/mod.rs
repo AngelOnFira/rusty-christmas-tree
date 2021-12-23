@@ -12,7 +12,7 @@ use serde_json;
 pub fn draw(tick: u64) -> TreeCanvas {
     let mut canvas = TreeCanvas::new();
 
-    let pixel_json = fs::read_to_string("enderlogo.json").expect("Something went wrong reading the file");
+    let pixel_json = include_str!("enderlogo.json");
 
     let pixel_data: Vec<Pixel> = serde_json::from_str(&pixel_json).unwrap();
 
