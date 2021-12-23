@@ -35,7 +35,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
     // Clear the background to black.
     draw.background().color(BLACK);
 
-    let tree_canvas = visualize_renderer(frame.nth(), Renderers::RainbowWave);
+    let tree_canvas = visualize_renderer(frame.nth(), Renderers::SpaceFight);
     let column_height = 75;
 
     // Draw a 20x75 grid of rectangles that are each 5x5 pixels. The colour of
