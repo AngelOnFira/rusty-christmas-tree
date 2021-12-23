@@ -15,6 +15,7 @@ pub enum Renderers {
     RainbowWave,
     Mario,
     JWST,
+    SellABee,
 }
 
 impl fmt::Display for Renderers {
@@ -29,6 +30,7 @@ impl fmt::Display for Renderers {
             Renderers::RainbowWave => write!(f, "Rainbow Wave"),
             Renderers::Mario => write!(f, "Mario"),
             Renderers::JWST => write!(f, "JWST"),
+            Renderers::SellABee => write!(f, "Sell A Bee"),
         }
     }
 }

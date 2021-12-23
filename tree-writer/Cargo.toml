@@ -33,6 +33,8 @@ tokio = { version = "1", features = ["full"] }
 pretty_env_logger = "0.4.0"
 log = "0.4.0"
 
+cached = "0.26"
+
 tree-data-schema = { path = "../tree-data-schema" }
 
 # mun_runtime = "0.3.0"
