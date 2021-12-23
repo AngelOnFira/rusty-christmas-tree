@@ -32,9 +32,30 @@ name. You'll then have to add code in several different places in the project:
 Hopefully I get some time to fix this eventually, but I don't know how right
 now. Now, you can start working in the `mod.rs` file in the new renderer folder.
 
+At this point, you should also be able to run the visualizer and see your
+renderer in action.
+
+```bash
+make visualize
+```
+
+Once you have something cool, make a pull request!
+
 <p align="center">
     <img src="images/mario.gif" width="500" />
 </p>
+
+### Other Make Commands
+
+```
+build: build tree-writer for the Raspberry Pi (requires Docker and cargo-cross)
+deploy: scp the binary to the Pi
+run: (build + deploy) build tree-writer for the Raspberry Pi and scp the binary to the Pi
+visualize: run the Nannou visualizer
+setup-web: install the prerequisites for the frontend
+frontend: serve the frontend
+frontend-release: serve the frontend in release mode
+```
 
 ## Architecture
 
