@@ -94,6 +94,20 @@ frontend-release: serve the frontend in release mode
 
 ## Architecture
 
+The plan for this project is to have many renderers implemented that show off
+different displays (tree-writer). There will be a web server running
+(tree-backend) that allows you to change what is currently being displayed on
+the tree. A simple web frontend (tree-frontend) will display all the options of
+renderers and allow you to pick one to display.
+
+On the Raspberry Pi, there will be a process (tree-deploy) that runs the main
+process (tree-writer). The first process will look for new releases from Github
+periodically. If there is a new release, it will update the and restart the main
+process.
+
+While you're developing, you can run the visualizer (tree-visualizer) to see
+what your renderer will look like on the tree.
+
 ### Physical Tree
 
 The physical tree is running on a Raspberry Pi Pico. There are 20 (actually 19)
@@ -120,7 +134,15 @@ same speed (I think:tm:) and orientation that will be displayed on the tree.
 
 ### tree-backend
 
+This crate uses [Warp] to serve a basic web server. It allows you to change the
+renderer that is currently being displayed on the tree. The `tree-writer` will
+ping this server about once a second to see if there is a new renderer to switch
+to.
+
 ### tree-frontend
+
+This crate uses [Yew] to create a basic frontend for the `tree-backend`. It will
+just have a list of buttons.
 
 ### tree-script
 
@@ -129,6 +151,8 @@ to the canvas. Currently, this isn't working, but if an MVP is made, then it
 could be easier to write with, and hot reloadable as well.
 
 [Nannou]: https://github.com/nannou-org/nannou
+[Warp]: https://github.com/seanmonstar/warp
+[Yew]: https://github.com/yewproject/yew
 
 <p align="center">
     <img src="images/snow.gif" width="500" />
