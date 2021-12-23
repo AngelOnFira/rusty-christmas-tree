@@ -1,5 +1,5 @@
 visualize:
-	cargo run --bin tree-visualizer
+	cargo run --bin tree-visualizer --no-default-features
 
 build:
 	cd tree-writer \

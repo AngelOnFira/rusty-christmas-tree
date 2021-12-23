@@ -17,6 +17,7 @@ path = "src/bin.rs"
 
 [dependencies]
 spidev = { version = "0.5.1", optional = true }
+lazy_static = "1.4.0"
 rand = "0.8.4"
 
 tree-data-schema = { path = "../tree-data-schema" }

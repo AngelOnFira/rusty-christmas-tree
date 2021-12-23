@@ -2645,6 +2645,7 @@ dependencies = [
 name = "tree-writer"
 version = "0.1.0"
 dependencies = [
+ "lazy_static",
  "rand 0.8.4",
  "spidev",
  "tree-data-schema",
