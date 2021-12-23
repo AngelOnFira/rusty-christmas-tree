@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 
 pub const FRAME_RATE: u64 = 20;
 
+// Add your new renderer here
 #[derive(Serialize, Deserialize, Clone, Copy, PartialEq, Eq)]
 pub enum Renderers {
     RedWave,
@@ -13,8 +14,9 @@ pub enum Renderers {
 
 impl fmt::Display for Renderers {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // Add a new display for your variant here
         match self {
-            Renderers::RedWave => write!(f, "Red Lines"),
+            Renderers::RedWave => write!(f, "Red Wave"),
             Renderers::Template => write!(f, "Template"),
             Renderers::Snow => write!(f, "Snow"),
         }

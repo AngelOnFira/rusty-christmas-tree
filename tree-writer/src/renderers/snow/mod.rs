@@ -98,7 +98,7 @@ pub fn draw(tick: u64) -> TreeCanvas {
             g: *g,
             b: *b,
         };
-        canvas.set_pixel(*x as usize, *y as usize, this_pixel)
+        canvas.set_pixel(*x as usize, 74 - *y as usize, this_pixel)
     }
 
     canvas
