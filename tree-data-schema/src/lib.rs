@@ -22,7 +22,7 @@ impl fmt::Display for Renderers {
             Renderers::Template => write!(f, "Template"),
             Renderers::Snow => write!(f, "Snow"),
             Renderers::EnderLogo => write!(f, "Ender Logo"),
-            Renderers::RainbowWave => write!(f, "Rainbow Wave")
+            Renderers::RainbowWave => write!(f, "Rainbow Wave"),
         }
     }
 }
