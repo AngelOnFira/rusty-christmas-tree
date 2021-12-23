@@ -1,13 +1,12 @@
-use std::cmp::min;
 use super::{Pixel, TreeCanvas};
+use std::cmp::min;
 
-use std::sync::{Arc, Mutex};
 use rand::Rng;
+use std::sync::{Arc, Mutex};
 
 // Name: Snow
 // Description: draw colorful snow, as well as provides an example of a stated renderer (using lazy static)
 // Author: Eve (@ayyEve)
-
 
 // because we need access to a list, we can store our state in a lazy static constant
 lazy_static::lazy_static! {
@@ -33,12 +32,9 @@ struct Thingy {
 }
 impl Thingy {
     fn new() -> Self {
-        Self {
-            flakes: Vec::new(),
-        }
+        Self { flakes: Vec::new() }
     }
     fn update(&mut self, tick: u64) {
-
         // update snowflakes
         for (x, y, _) in self.flakes.iter_mut() {
             // move every snowflake down
@@ -51,9 +47,11 @@ impl Thingy {
                 if rand::thread_rng().gen_range(0..10) > 5u8 {
                     offset *= -1;
                 }
-                
+
                 *x += offset;
-                if *x < 0 {*x = 20}
+                if *x < 0 {
+                    *x = 20
+                }
             }
         }
 
@@ -63,14 +61,11 @@ impl Thingy {
                 self.flakes.push(gen_flake());
             }
         }
-        
+
         // remove flakes too low
-        self.flakes.retain(|(x, y, _)| {
-            *y < 75 && *x < 20
-        });
+        self.flakes.retain(|(x, y, _)| *y < 75 && *x < 20);
     }
 }
-
 
 pub fn draw(tick: u64) -> TreeCanvas {
     let mut canvas = TreeCanvas::new();
@@ -82,11 +77,7 @@ pub fn draw(tick: u64) -> TreeCanvas {
     // clear the screen (could technically loop through flakes before update and )
     for y in 0..75 {
         for x in 0..20 {
-            let this_pixel = Pixel {
-                r: 0,
-                g: 0,
-                b: 0,
-            };
+            let this_pixel = Pixel { r: 0, g: 0, b: 0 };
             canvas.set_pixel(x, y, this_pixel)
         }
     }

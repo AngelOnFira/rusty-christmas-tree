@@ -11,6 +11,7 @@ pub enum Renderers {
     Template,
     Snow,
     EnderLogo,
+    RainbowWave,
 }
 
 impl fmt::Display for Renderers {
@@ -20,7 +21,8 @@ impl fmt::Display for Renderers {
             Renderers::RedWave => write!(f, "Red Wave"),
             Renderers::Template => write!(f, "Template"),
             Renderers::Snow => write!(f, "Snow"),
-            Renderers::EnderLogo => write!(f, "Ender Logo")
+            Renderers::EnderLogo => write!(f, "Ender Logo"),
+            Renderers::RainbowWave => write!(f, "Rainbow Wave"),
         }
     }
 }
