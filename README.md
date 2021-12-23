@@ -14,6 +14,10 @@ files and Pi Pico setup code on his project
 If any of this doesn't make sense, write an issue and I'll try to make it more
 clear 👍
 
+This should get you started with making something to display on the tree. There
+is a Nannou visualizer included so you can see what it will look like before
+making a PR. You'll be able to run this with `make visualize` from the root.
+
 To write your own code to run on the tree, you need to implement a "renderer". A
 renderer is just a Rust module that implements a draw function, and returns a
 `TreeCanvas`. You can find the renderers in [this
