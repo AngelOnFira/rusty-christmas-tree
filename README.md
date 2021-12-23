@@ -112,8 +112,8 @@ what your renderer will look like on the tree.
 
 The physical tree is running on a Raspberry Pi Pico. There are 20 (actually 19)
 strips running, creating 19x75 LED grid. You send data to the LED strings using
-`spidev`, and send 4500 8-bit numbers for each frame. 20 frames can be drawn per
-second. The light indexes on the tree are as follows:
+`spidev`, and send 4500 8-bit numbers for each frame. Up to 33 frames can be
+drawn per second. The light indexes on the tree are as follows:
 
 ```
 3 4 9
