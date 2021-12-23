@@ -11,7 +11,7 @@ build:
 
 frontend:
 	(cd tree-frontend \
-	&& trunk serve)
+	&& trunk serve --proxy-backend=http://localhost:3030)
 
 frontend-release:
 	(cd tree-frontend \
