@@ -7,30 +7,33 @@ use rand::Rng;
 const X_MAX: usize = 19;
 const Y_MAX: usize = 75;
 
+const MAX_SHIPS:usize = 10;
+const SHIP_SHOOT_TIMER: i8 = 10;
+const BULLET_SPEED: i8 = 2;
+const EXPLOSION_SIZE_MAX: i8 = 4;
 
 type Point = (i8, i8);
 
 
 // Name: Space Fight
-// Description: space fight!
+// Description: Space Fight!
 // Author: Eve (@ayyEve)
 
 
 // because we need access to a list, we can store our state in a lazy static constant
 lazy_static::lazy_static! {
     // stores the state
-    static ref THINGY:Arc<Mutex<Thingy>> = Arc::new(Mutex::new(Thingy::new()));
+    static ref THINGY:Arc<Mutex<SpaceFight>> = Arc::new(Mutex::new(SpaceFight::new()));
 }
 
-const MAX_SHIPS:usize = 10;
 
-struct Thingy {
+struct SpaceFight {
     ships: Vec<Ship>,
     bullets: Vec<Bullet>,
     explosions: Vec<Explosion>,
     stars: Vec<SpaceStar>
 }
-impl Thingy {
+impl SpaceFight {
     fn new() -> Self {
         let ships = vec![
             Ship::new(10, 73, true), // friend C:
@@ -102,6 +105,7 @@ impl Thingy {
                 ship_remove_indices.push(i);
                 continue;
             }
+            // ship.update(tick, self);
 
             // check collision with other ships
             let ship_bounds = ship.bounds();
@@ -137,6 +141,7 @@ impl Thingy {
         for i in bullets.iter_mut() {
             i.update(tick, self)
         }
+
         let bullets_cloned = bullets.clone();
         for (i, bullet) in bullets.iter_mut().enumerate() {
             if bullet_remove_indices.contains(&i) {continue}
@@ -146,6 +151,7 @@ impl Thingy {
                 bullet_remove_indices.push(i);
                 continue;
             }
+            // bullet.update(tick, self);
 
             
             // check collision with other bullets
@@ -189,6 +195,7 @@ impl Thingy {
             if collision {continue}
         }
         
+
         // remove bad bullets
         bullet_remove_indices.sort();
         for ind in bullet_remove_indices.iter().rev() {
@@ -210,6 +217,7 @@ impl Thingy {
             }
         }
 
+
         // remove bad explosions
         explosion_remove_indices.sort();
         for ind in explosion_remove_indices.iter().rev() {
@@ -217,6 +225,32 @@ impl Thingy {
         }
         
         self.explosions = explosions;
+    }
+
+    fn draw(&self) -> Vec<(i8, i8, Pixel)> {
+        let mut pixel_list = Vec::new();
+
+        // draw stars
+        for star in self.stars.iter() {
+            star.draw(&mut pixel_list);
+        }
+    
+        // draw ships
+        for ship in self.ships.iter() {
+            ship.draw(&mut pixel_list);
+        }
+    
+        // draw bullets
+        for bullet in self.bullets.iter() {
+            bullet.draw(&mut pixel_list);
+        }
+    
+        // draw explosions
+        for explosion in self.explosions.iter() {
+            explosion.draw(&mut pixel_list);
+        }
+
+        pixel_list
     }
 }
 
@@ -240,28 +274,7 @@ pub fn draw(tick: u64) -> TreeCanvas {
         }
     }
 
-    let mut pixel_list = Vec::new();
-
-    // draw stars
-    for ship in lock.ships.iter() {
-        ship.draw(&mut pixel_list);
-    }
-
-    // draw ships
-    for ship in lock.ships.iter() {
-        ship.draw(&mut pixel_list);
-    }
-
-    // draw bullets
-    for bullet in lock.bullets.iter() {
-        bullet.draw(&mut pixel_list);
-    }
-
-    // draw explosions
-    for explosion in lock.explosions.iter() {
-        explosion.draw(&mut pixel_list);
-    }
-
+    let pixel_list = lock.draw();
 
     // //println!("=======================");
     // purge any bad pixels from the list 
@@ -284,13 +297,15 @@ pub struct SpaceStar {
 }
 impl SpaceStar {
     fn new() -> Self {
+        let x = rand::thread_rng().gen_range(0..21);
+        // println!("adding star");
         Self {
-            x: rand::thread_rng().gen_range(0..20),
-            y: 75
+            x,
+            y: 0
         }
     }
     fn update(&mut self, tick: u64) {
-        self.y -= 5;
+        self.y += 5;
     }
 
     fn draw(&self, canvas: &mut Vec<(i8, i8, Pixel)>) {
@@ -303,7 +318,6 @@ impl SpaceStar {
 }
 
 
-const SHIP_SHOOT_TIMER: i8 = 10;
 #[derive(Clone)]
 pub struct Ship {
     x: i8,
@@ -334,7 +348,7 @@ impl Ship {
         ]
     }
 
-    fn update(&mut self, tick: u64, game: &mut Thingy) {
+    fn update(&mut self, tick: u64, game: &mut SpaceFight) {
         if self.going_up {
             self.y -= 1
         } else {
@@ -369,7 +383,6 @@ impl Ship {
 }
 
 
-const BULLET_SPEED: i8 = 2;
 #[derive(Clone)]
 pub struct Bullet {
     x: i8,
@@ -394,7 +407,7 @@ impl Bullet {
         ]
     }
 
-    fn update(&mut self, tick: u64, game: &mut Thingy) {
+    fn update(&mut self, tick: u64, game: &mut SpaceFight) {
         if self.going_up {
             self.y -= BULLET_SPEED
         } else {
@@ -416,7 +429,6 @@ impl Bullet {
     }
 }
 
-const EXPLOSION_SIZE_MAX: i8 = 4;
 #[derive(Clone)]
 pub struct Explosion {
     x: i8,
@@ -435,7 +447,7 @@ impl Explosion {
         }
     }
 
-    fn update(&mut self, tick: u64, game: &mut Thingy) {
+    fn update(&mut self, tick: u64, game: &mut SpaceFight) {
         if self.growing {
             self.size += 1;
         } else {
