@@ -2665,6 +2665,7 @@ dependencies = [
 name = "tree-writer"
 version = "0.1.0"
 dependencies = [
+ "image",
  "lazy_static",
  "rand 0.8.4",
  "serde",
