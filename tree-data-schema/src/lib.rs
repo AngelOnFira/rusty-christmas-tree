@@ -8,6 +8,7 @@ pub const FRAME_RATE: u64 = 20;
 pub enum Renderers {
     RedWave,
     Template,
+    Snow,
 }
 
 impl fmt::Display for Renderers {
@@ -15,6 +16,7 @@ impl fmt::Display for Renderers {
         match self {
             Renderers::RedWave => write!(f, "Red Lines"),
             Renderers::Template => write!(f, "Template"),
+            Renderers::Snow => write!(f, "Snow"),
         }
     }
 }
