@@ -7,6 +7,7 @@ pub mod red_wave;
 pub mod template;
 pub mod snow;
 pub mod ender_logo;
+pub mod rainbow_wave;
 
 pub mod tree_canvas;
 
@@ -17,5 +18,6 @@ pub fn visualize_renderer(tick: u64, renderer: Renderers) -> TreeCanvas {
         Renderers::RedWave => red_wave::draw(tick),
         Renderers::Template => template::draw(tick),
         Renderers::Snow => snow::draw(tick),
+        Renderers::RainbowWave => rainbow_wave::draw(tick),
     }
 }
