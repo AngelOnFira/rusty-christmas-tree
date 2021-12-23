@@ -11,6 +11,7 @@ pub mod ender_logo;
 pub mod tree_canvas;
 
 pub fn visualize_renderer(tick: u64, renderer: Renderers) -> TreeCanvas {
+    // Add your enum variant here
     match renderer {
         Renderers::EnderLogo => ender_logo::draw(tick),
         Renderers::RedWave => red_wave::draw(tick),
