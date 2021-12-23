@@ -46,7 +46,7 @@ fn main() {
 
     let mut tick = 0;
 
-    let renderer = Renderers::RedWave;
+    let renderer = Renderers::Template;
 
     loop {
         thread::sleep(Duration::from_millis(1000 / FRAME_RATE));

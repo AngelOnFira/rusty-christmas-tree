@@ -13,7 +13,7 @@ path = "src/lib.rs"
 
 [[bin]]
 name = "writerbin"
-path = "src/bin.rs"
+path = "src/main.rs"
 
 [dependencies]
 spidev = { version = "0.5.1", optional = true }

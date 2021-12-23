@@ -50,16 +50,18 @@ impl TreeCanvas {
         let mut buffer: [u8; 4500] = [0; 4500];
         let column_height = 75;
 
-        for i in 0..4500 {
+        for i in 0..1500 {
             let translation_x = i / column_height;
             let mut translation_y = i % column_height;
 
             // If we're on an odd column, flip the y direction
-            if translation_x % 2 == 0 {
-                translation_y = column_height - translation_y;
+            if translation_x % 2 == 1 {
+                translation_y = column_height - translation_y - 1;
             }
 
             buffer[i * 3 + 0] = self.get_pixel(translation_x, translation_y).r;
+            buffer[i * 3 + 1] = self.get_pixel(translation_x, translation_y).g;
+            buffer[i * 3 + 2] = self.get_pixel(translation_x, translation_y).b;
         }
 
         buffer
