@@ -51,13 +51,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         warp::reply::json(&*current_renderer_clone.lock().unwrap())
     });
 
-    let index = warp::path::end().and(warp::fs::dir(
-        "/home/forest/Documents/git/aidan-tree/tree-frontend/dist/",
-    ));
+    let index = warp::path::end().and(warp::fs::dir("/static"));
 
-    let static_files = warp::path("static").and(warp::fs::dir(
-        "/home/forest/Documents/git/aidan-tree/tree-frontend/dist/",
-    ));
+    let static_files = warp::path("static").and(warp::fs::dir("/static"));
 
     let routes = renderers
         .or(renderer)
