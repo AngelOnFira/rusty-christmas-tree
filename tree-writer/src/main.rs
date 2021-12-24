@@ -102,6 +102,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             Renderers::SpaceFight => space_fight::draw(tick),
             Renderers::RainbowWave => rainbow_wave::draw(tick),
             Renderers::Mario => mario::draw(tick),
+            Renderers::JWST=>JWST::draw(tick)
         };
 
         full_duplex(&mut spi, tree_canvas).unwrap();
