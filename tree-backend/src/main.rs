@@ -4,7 +4,7 @@ use log::info;
 use pretty_env_logger;
 use warp::Filter;
 
-use tree_data_schema::{renderer_strings, Renderer, RendererStrings, Renderers};
+use tree_data_schema::{renderer_strings, Renderer, Renderers};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
