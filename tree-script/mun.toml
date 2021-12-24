@@ -1,6 +1,5 @@
 [package]
 name="tree-script"
-authors=[]
 version="0.1.0"
 authors = ["Forest Anderson <forestkzanderson@gmail.com>"]
 license = "MIT/Apache-2.0"

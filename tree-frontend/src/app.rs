@@ -11,13 +11,14 @@ pub fn app() -> Html {
             move |_| {
                 let renderers = renderers.clone();
                 wasm_bindgen_futures::spawn_local(async move {
-                    let renderer_strings: Vec<Renderer> = Request::get("/api/renderers")
-                        .send()
-                        .await
-                        .unwrap()
-                        .json()
-                        .await
-                        .unwrap();
+                    let renderer_strings: Vec<Renderer> =
+                        Request::get("https://tree.dendropho.be/renderers")
+                            .send()
+                            .await
+                            .unwrap()
+                            .json()
+                            .await
+                            .unwrap();
                     renderers.set(renderer_strings);
                 });
                 || ()
@@ -29,7 +30,7 @@ pub fn app() -> Html {
     let on_video_select = {
         Callback::from(move |renderer: Renderer| {
             wasm_bindgen_futures::spawn_local(async move {
-                Request::post("/api/renderer")
+                Request::post("https://tree.dendropho.be/renderer")
                     .body(serde_json::to_string(&renderer.name).unwrap())
                     .header("Content-Type", "application/json")
                     .send()
