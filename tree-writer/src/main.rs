@@ -1,3 +1,4 @@
+use log::info;
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
 use std::{io, thread, time::Duration};
 use tree_data_schema::{Renderers, FRAME_RATE};
@@ -43,15 +44,38 @@ fn full_duplex(spi: &mut Spidev, tree_canvas: TreeCanvas) -> io::Result<()> {
 //     let tx_buf: i32 = invoke_fn!(runtime_ref, "build_array", tick).unwrap();
 // }
 
-fn main() {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    pretty_env_logger::formatted_builder()
+        .filter_level(log::LevelFilter::Info)
+        .init();
+
     let mut spi = create_spi().unwrap();
 
     let mut tick = 0;
 
-    let renderer = Renderers::Snow;
+    let mut renderer = Renderers::Snow;
 
     loop {
         thread::sleep(Duration::from_millis(1000 / FRAME_RATE));
+
+        // Make a request to get the current renderer
+        // once a second
+        // localhost:3030/current_renderer
+        if tick % FRAME_RATE == 0 {
+            renderer = match reqwest::get("https://a402-174-116-19-250.ngrok.io/current_renderer").await {
+                Ok(response) => {
+                    let renderer: Renderers =
+                        serde_json::from_str(&response.text().await.unwrap()).unwrap();
+                    info!("Current renderer is now {}", renderer);
+                    renderer
+                }
+                Err(e) => {
+                    info!("Failed to get renderer: {}", e);
+                    renderer
+                }
+            };
+        }
 
         // Add your enum variant here (and remember to import it above)
         let tree_canvas: TreeCanvas = match renderer {
