@@ -2,6 +2,8 @@
 name = "tree-writer"
 version = "0.1.0"
 edition = "2021"
+authors = ["Forest Anderson <forestkzanderson@gmail.com>"]
+license = "MIT/Apache-2.0"
 
 [features]
 default = ["spidev"]
