@@ -41,7 +41,14 @@ pub struct RendererStrings {
 }
 
 pub fn renderer_strings() -> Vec<Renderer> {
-    let renderers = [Renderers::RedWave];
+    let renderers = [
+        Renderers::RedWave,
+        Renderers::Template,
+        Renderers::Snow,
+        Renderers::EnderLogo,
+        Renderers::SpaceFight,
+        Renderers::RainbowWave,
+    ];
 
     renderers
         .iter()

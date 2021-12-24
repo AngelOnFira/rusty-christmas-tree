@@ -11,7 +11,7 @@ pub fn app() -> Html {
             move |_| {
                 let renderers = renderers.clone();
                 wasm_bindgen_futures::spawn_local(async move {
-                    let renderer_strings: Vec<Renderer> = Request::get("/renderers")
+                    let renderer_strings: Vec<Renderer> = Request::get("/api/renderers")
                         .send()
                         .await
                         .unwrap()
@@ -26,29 +26,35 @@ pub fn app() -> Html {
         );
     }
 
-    let selected_renderer = use_state(|| None);
-
     let on_video_select = {
-        let selected_renderer = selected_renderer.clone();
-        Callback::from(move |renderer: Renderer| selected_renderer.set(Some(renderer)))
+        Callback::from(move |renderer: Renderer| {
+            wasm_bindgen_futures::spawn_local(async move {
+                Request::post("/api/renderer")
+                    .body(serde_json::to_string(&renderer.name).unwrap())
+                    .header("Content-Type", "application/json")
+                    .send()
+                    .await
+                    .unwrap();
+            })
+        })
     };
 
     html! {
         <>
             <h1>{ "Tree Patterns" }</h1>
-            // <div>
-            //     {
-            //         renderers.into_iter().map(|r| {
-            //             let renderer = r.clone();
-            //             html! {
-            //                 <>
-            //                 <RendererButton renderer={renderer} on_click={on_video_select.clone()} />
-            //                 </>
-            //             }
-            //         }).collect::<Html>()
-            //     }
+            <div>
+                {
+                    (*renderers).clone().into_iter().map(|r| {
+                        let renderer = r.clone();
+                        html! {
+                            <>
+                            <RendererButton renderer={renderer} on_click={on_video_select.clone()} />
+                            </>
+                        }
+                    }).collect::<Html>()
+                }
 
-            // </div>
+            </div>
         </>
     }
 }
@@ -68,8 +74,10 @@ fn renderer_button(RendererButtonProps { renderer, on_click }: &RendererButtonPr
     };
 
     html! {
-        <button onclick={on_renderer_click}>
-            { renderer.name.clone() }
-        </button>
+        <div>
+            <button onclick={on_renderer_click}>
+                { renderer.name.clone() }
+            </button>
+        </div>
     }
 }
