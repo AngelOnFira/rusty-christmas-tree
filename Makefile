@@ -11,7 +11,11 @@ build:
 
 frontend:
 	(cd tree-frontend \
-	&& trunk serve --proxy-backend=http://localhost:3030)
+	&& trunk serve --proxy-backend=http://localhost:3030/ --proxy-rewrite=/api/)
+
+backend:
+	(cd tree-backend \
+	&& RUST_LOG=debug cargo run)
 
 frontend-release:
 	(cd tree-frontend \

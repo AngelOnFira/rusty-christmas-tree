@@ -8,5 +8,7 @@ edition = "2021"
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 warp = "0.3"
+pretty_env_logger = "0.4.0"
+log = "0.4.14"
 
 tree-data-schema = { path = "../tree-data-schema" }
