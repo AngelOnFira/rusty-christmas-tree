@@ -56,6 +56,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut renderer = Renderers::Snow;
 
+    let mut last_fail = false;
+
     loop {
         thread::sleep(Duration::from_millis(1000 / FRAME_RATE));
 
@@ -63,15 +65,30 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         // once a second
         // localhost:3030/current_renderer
         if tick % FRAME_RATE == 0 {
-            renderer = match reqwest::get("https://a402-174-116-19-250.ngrok.io/current_renderer").await {
+            renderer = match reqwest::get("https://a402-174-116-19-250.ngrok.io/current_renderer")
+                .await
+            {
                 Ok(response) => {
-                    let renderer: Renderers =
-                        serde_json::from_str(&response.text().await.unwrap()).unwrap();
-                    info!("Current renderer is now {}", renderer);
-                    renderer
+                    let mut new_renderer = renderer;
+                    if let Ok(body) = &response.text().await {
+                        if let Ok(unwrapped_renderer) = serde_json::from_str::<Renderers>(body) {
+                            new_renderer = unwrapped_renderer;
+                        }
+                    }
+
+                    if new_renderer != renderer {
+                        info!("Changing renderer to {}", new_renderer);
+                    }
+
+                    // Reset last fail so we only show network errors once
+                    last_fail = false;
+                    new_renderer
                 }
                 Err(e) => {
-                    info!("Failed to get renderer: {}", e);
+                    if !last_fail {
+                        info!("Failed to get renderer: {}", e);
+                        last_fail = true;
+                    }
                     renderer
                 }
             };

@@ -8,6 +8,7 @@ build:
 		--package tree-writer \
 		--release \
 		--target armv7-unknown-linux-gnueabihf
+	# strip target/armv7-unknown-linux-gnueabihf/release/rusty-tree
 
 frontend:
 	(cd tree-frontend \
@@ -26,4 +27,5 @@ setup-web:
 	cargo install trunk wasm-bindgen-cli
 
 deploy:
-	scp target/armv7-unknown-linux-gnueabihf/release/writerbin tree:~/rusty-tree
+	du -sk target/armv7-unknown-linux-gnueabihf/release/rusty-tree
+	scp target/armv7-unknown-linux-gnueabihf/release/rusty-tree tree:~/rusty-tree
