@@ -13,7 +13,7 @@ pub fn draw(tick: u64) -> TreeCanvas {
         for x in 0..20 {
             let this_pixel = Pixel {
                 r: (
-                    (tick as f64) // Start by converting the tick to a 64 bit float
+                    ((tick / 10) as f64) // Start by converting the tick to a 64 bit float
                     .sin() // The sin will be between -1 and 1
                     .abs() // Get the absolute value so we are between 0 and 1
                     * 150.0 // Multiply by 150 to get a number between 0 and 150

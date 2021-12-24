@@ -1,17 +1,60 @@
 html,
 body {
-  height: 100%;
   margin: 0;
+  margin-top: 100px;
+  padding: 0;
+
+  background: black;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+    Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
+button {
+  border-color: transparent;
+}
+* {
+  box-sizing: border-box;
+  color: white;
+}
 body {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-
-  background: linear-gradient(to bottom right, #fc6767, #ec008c);
   font-size: 1.5rem;
 }
+
+.header {
+  width: 100%;
+  background: linear-gradient(to bottom right, #fc6767, #ec008c);
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.header_text {
+  font-size: 0.6em;
+  font-weight: 600;
+}
+
+.banner {
+  background: rgba(22, 22, 22, 0.582);
+  width: 100%;
+  height: 80px;
+  color: white;
+  position: fixed;
+  padding: 0 20px;
+  top: 50px;
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(10px);
+}
+.banner_text {
+  font-weight: 700;
+}
+//
 
 main {
   color: #fff6d5;
@@ -25,11 +68,71 @@ main {
 
 .heart:after {
   content: "❤️";
-
-  font-size: 1.75em;
 }
 
 h1 + .subtitle {
   display: block;
   margin-top: -1em;
+}
+
+.list_renderers {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card_holder {
+  padding: 6px;
+  width: 50%;
+}
+.card {
+  height: 400px;
+
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.card_gif {
+  width: 100%;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.footer {
+  width: 100%;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer_button {
+  width: 100%;
+  max-width: 500px;
+
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ec008c;
+  font-weight: 700;
+  padding: 12px;
+}
+
+.button_launch {
+  background: #ec008c;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 4px;
+  font-size: 0.7em;
+  border-radius: 50px;
+  width: 50px;
+  color: white;
 }

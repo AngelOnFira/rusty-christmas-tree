@@ -51,10 +51,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         warp::reply::json(&*current_renderer_clone.lock().unwrap())
     });
 
-    let cors = warp::cors().allow_any_origin();
-    let routes = renderers.or(renderer).or(current_renderer).with(cors);
+    let index = warp::path::end().and(warp::fs::dir(
+        "/home/forest/Documents/git/aidan-tree/tree-frontend/dist/",
+    ));
 
-    warp::serve(routes).run(([0, 0, 0, 0], 3030)).await;
+    let static_files = warp::path("static").and(warp::fs::dir(
+        "/home/forest/Documents/git/aidan-tree/tree-frontend/dist/",
+    ));
+
+    let routes = renderers
+        .or(renderer)
+        .or(current_renderer)
+        .or(index)
+        .or(static_files);
+
+    warp::serve(routes).run(([0, 0, 0, 0], 3032)).await;
 
     Ok(())
 }

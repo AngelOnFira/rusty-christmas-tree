@@ -31,10 +31,14 @@ impl fmt::Display for Renderers {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Copy, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, PartialEq, Eq)]
 pub struct Renderer {
     pub name: Renderers,
     pub enabled: bool,
+
+    pub link: String,
+    // pub subtitle: String,
+    // pub author: String,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -44,13 +48,13 @@ pub struct RendererStrings {
 
 pub fn renderer_strings() -> Vec<Renderer> {
     let renderers = [
-        Renderers::RedWave,
-        Renderers::Template,
-        Renderers::Snow,
-        Renderers::EnderLogo,
-        Renderers::SpaceFight,
-        Renderers::RainbowWave,
-        Renderers::Mario,
+        (Renderers::RedWave, "https://cdn.discordapp.com/attachments/444005079410802699/924071697852821515/RedWaves.mp4"),
+        (Renderers::Template, "https://cdn.discordapp.com/attachments/444005079410802699/924071698360303656/Template.mp4"),
+        (Renderers::Snow, "https://cdn.discordapp.com/attachments/444005079410802699/924071698066714664/Snow.mp4"),
+        (Renderers::EnderLogo, "https://cdn.discordapp.com/attachments/444005079410802699/924071697211080704/EnderLogo.mp4"),
+        (Renderers::SpaceFight, "https://cdn.discordapp.com/attachments/444005079410802699/924071696955215872/spacefight.mp4"),
+        (Renderers::RainbowWave, "https://cdn.discordapp.com/attachments/444005079410802699/924071697387245598/RainbowWave.mp4"),
+        (Renderers::Mario, "https://cdn.discordapp.com/attachments/444005079410802699/924071697630527568/Mario.mp4"),
     ];
 
     renderers
@@ -58,8 +62,9 @@ pub fn renderer_strings() -> Vec<Renderer> {
         .map(|r| {
             let renderer = r.clone();
             Renderer {
-                name: renderer,
+                name: renderer.0,
                 enabled: false,
+                link: renderer.1.to_string(),
             }
         })
         .collect()
