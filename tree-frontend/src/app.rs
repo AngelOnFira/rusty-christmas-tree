@@ -64,11 +64,11 @@ pub fn app() -> Html {
                 }
             </div>
             <div class="footer">
-            <div class="footer_list">
+           
             <button class="footer_button"> { "View on Github" }</button>
 
             <p class="footer_attr">{ "@AngelOnFira" }</p>
-            </div>
+         
             </div>
 
         </>
