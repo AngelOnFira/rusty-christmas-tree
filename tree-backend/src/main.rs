@@ -65,7 +65,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .or(index)
         .or(static_files);
 
-    warp::serve(routes).run(([0, 0, 0, 0], 3032)).await;
+    warp::serve(routes).run(([0, 0, 0, 0], 3030)).await;
 
     Ok(())
 }
