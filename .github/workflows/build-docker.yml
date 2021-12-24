@@ -24,7 +24,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: tree-frontend/Dockerfile
           context: .
           push: true
           tags: ghcr.io/angelonfira/rusty-christmas-tree/rusty-tree-web:latest

@@ -12,7 +12,10 @@ build:
 
 frontend:
 	(cd tree-frontend \
-	&& trunk serve --proxy-backend=http://localhost:3030/ --proxy-rewrite=/api/)
+	&& trunk serve \
+		--proxy-backend=http://localhost:3030/ \
+		--proxy-rewrite=/api/ \
+		--public-url=/static/)
 
 backend:
 	(cd tree-backend \
