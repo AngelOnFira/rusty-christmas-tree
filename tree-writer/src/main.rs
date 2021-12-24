@@ -7,7 +7,7 @@ use tree_data_schema::{Renderers, FRAME_RATE};
 
 mod renderers;
 use crate::renderers::{
-    ender_logo, rainbow_wave, red_wave, snow, space_fight, template, tree_canvas::TreeCanvas,
+    ender_logo, mario, rainbow_wave, red_wave, snow, space_fight, template, tree_canvas::TreeCanvas,
 };
 
 fn create_spi() -> io::Result<Spidev> {
@@ -102,6 +102,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             Renderers::EnderLogo => ender_logo::draw(tick),
             Renderers::SpaceFight => space_fight::draw(tick),
             Renderers::RainbowWave => rainbow_wave::draw(tick),
+            Renderers::Mario => mario::draw(tick),
         };
 
         full_duplex(&mut spi, tree_canvas).unwrap();

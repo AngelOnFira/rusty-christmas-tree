@@ -13,6 +13,7 @@ pub enum Renderers {
     EnderLogo,
     SpaceFight,
     RainbowWave,
+    Mario,
 }
 
 impl fmt::Display for Renderers {
@@ -25,6 +26,7 @@ impl fmt::Display for Renderers {
             Renderers::EnderLogo => write!(f, "Ender Logo"),
             Renderers::SpaceFight => write!(f, "Space Fight"),
             Renderers::RainbowWave => write!(f, "Rainbow Wave"),
+            Renderers::Mario => write!(f, "Mario"),
         }
     }
 }
@@ -48,6 +50,7 @@ pub fn renderer_strings() -> Vec<Renderer> {
         Renderers::EnderLogo,
         Renderers::SpaceFight,
         Renderers::RainbowWave,
+        Renderers::Mario,
     ];
 
     renderers
