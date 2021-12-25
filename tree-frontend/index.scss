@@ -33,6 +33,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
+  z-index: 100;
 }
 .header_text {
   font-size: 0.6em;
@@ -50,6 +51,7 @@ body {
   left: 0;
   right: 0;
   backdrop-filter: blur(10px);
+  z-index: 100;
 }
 .banner_text {
   font-weight: 700;
@@ -83,14 +85,32 @@ h1 + .subtitle {
   flex-direction: row;
   flex-wrap: wrap;
 }
-
 .card_holder {
   padding: 6px;
-  width: 50%;
+  width: 100%;
 }
+
+@media only screen and (min-width: 600px) {
+  .card_holder {
+    padding: 6px;
+    width: 50%;
+  }
+  
+}
+@media only screen and (min-width: 900px) {
+  .list_renderers {
+    max-width: 900px;
+  }
+  .card_holder {
+    padding: 6px;
+    width: 33.33%;
+  }
+  
+}
+
 .card {
   height: 400px;
-
+  position: relative;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 8px;
@@ -107,6 +127,21 @@ h1 + .subtitle {
   object-fit: cover;
 }
 
+.card_info {
+  padding: 10px;
+}
+.card_info_author {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 80%;
+  margin: 2px 0;
+}
+
+.card_info_text {
+  font-weight: 700;
+  font-size: 1.1em;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 2px 0;
+}
 .footer {
   width: 100%;
   padding: 50px 20px;
@@ -120,27 +155,34 @@ h1 + .subtitle {
   max-width: 500px;
 
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  border-radius: 50px;
   color: #ec008c;
   font-weight: 700;
   padding: 12px;
+  margin: 30px auto;
 }
 
 .button_launch {
   background: #ec008c;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 700;
+  font-size: 0.6em;
   padding: 4px;
   font-size: 0.7em;
   border-radius: 50px;
-  width: 50px;
+  width: 60px;
   color: white;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
 }
 
 .footer_attr {
   width: 100%;
-  background: rgba(255, 255, 255, 0.1);
+
   padding: 10px;
+
   text-align: center;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 1em;
+  color: rgba(255, 255, 255, 0.4);
 }

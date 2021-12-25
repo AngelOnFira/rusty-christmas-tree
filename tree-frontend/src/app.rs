@@ -1,5 +1,5 @@
 use reqwasm::http::Request;
-use tree_data_schema::{Renderer};
+use tree_data_schema::Renderer;
 use yew::prelude::*;
 
 #[function_component(App)]
@@ -11,14 +11,13 @@ pub fn app() -> Html {
             move |_| {
                 let renderers = renderers.clone();
                 wasm_bindgen_futures::spawn_local(async move {
-                    let renderer_strings: Vec<Renderer> =
-                        Request::get("/renderers")
-                            .send()
-                            .await
-                            .unwrap()
-                            .json()
-                            .await
-                            .unwrap();
+                    let renderer_strings: Vec<Renderer> = Request::get("/renderers")
+                        .send()
+                        .await
+                        .unwrap()
+                        .json()
+                        .await
+                        .unwrap();
                     renderers.set(renderer_strings);
                 });
                 || ()
@@ -43,7 +42,7 @@ pub fn app() -> Html {
     html! {
         <>
             <div class="header">
-            <p class="header_text">{ "Build your own Rusty Tree" }</p>
+            <a href="{ 'https://github.com/AngelOnFira/rusty-christmas-tree#adding-your-own-renderer' }" target="_blank" class="header_text">{ "Build your own Rusty Tree" }</a>
             </div>
             <div class="banner">
             <div class="banner_icon"></div>
@@ -64,11 +63,11 @@ pub fn app() -> Html {
                 }
             </div>
             <div class="footer">
-           
+
             <button class="footer_button"> { "View on Github" }</button>
 
             <p class="footer_attr">{ "@AngelOnFira" }</p>
-         
+
             </div>
 
         </>
@@ -98,14 +97,14 @@ fn renderer_button(RendererButtonProps { renderer, on_click }: &RendererButtonPr
                 </video>
 
                 <div class="card_info">
-                    <p class="card_info_name">{ renderer.name.clone() }</p>
+                    <p class="card_info_text">{ renderer.name.clone() }</p>
                     // <p class="card_info_subtitle">{ "Mario runs hapily through the hills"}</p>
                     // <p class="card_info_author"> { "@Zesterer" }</p>
 
                 </div>
-                <div class="card_tray">
+
                     <button onclick={on_renderer_click} class="button_launch">{ "Run" }</button>
-                </div>
+
             </div>
         </div>
     }

@@ -63,7 +63,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // Make a request to get the current renderer
         // once a second
-        if tick % FRAME_RATE == 0 {
+        if tick % (FRAME_RATE * 15) == 0 {
             renderer = match reqwest::get("https://tree.dendropho.be/current_renderer")
                 .await
             {
