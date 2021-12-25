@@ -12,7 +12,7 @@ pub fn app() -> Html {
                 let renderers = renderers.clone();
                 wasm_bindgen_futures::spawn_local(async move {
                     let renderer_strings: Vec<Renderer> =
-                        Request::get("https://tree.dendropho.be//renderers")
+                        Request::get("/renderers")
                             .send()
                             .await
                             .unwrap()
@@ -30,7 +30,7 @@ pub fn app() -> Html {
     let on_video_select = {
         Callback::from(move |renderer: Renderer| {
             wasm_bindgen_futures::spawn_local(async move {
-                Request::post("https://tree.dendropho.be//renderer")
+                Request::post("/renderer")
                     .body(serde_json::to_string(&renderer.name).unwrap())
                     .header("Content-Type", "application/json")
                     .send()
@@ -99,13 +99,13 @@ fn renderer_button(RendererButtonProps { renderer, on_click }: &RendererButtonPr
 
                 <div class="card_info">
                     <p class="card_info_name">{ renderer.name.clone() }</p>
-                    <p class="card_info_subtitle">{ "Mario runs hapily through the hills"}</p>
-                    <p class="card_info_author"> { "@Zesterer"}</p>
+                    // <p class="card_info_subtitle">{ "Mario runs hapily through the hills"}</p>
+                    // <p class="card_info_author"> { "@Zesterer" }</p>
 
                 </div>
                 <div class="card_tray">
-                        <button onclick={on_renderer_click} class="button_launch">{ "Run" }</button>
-                    </div>
+                    <button onclick={on_renderer_click} class="button_launch">{ "Run" }</button>
+                </div>
             </div>
         </div>
     }

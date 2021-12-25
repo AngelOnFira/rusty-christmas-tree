@@ -25,6 +25,6 @@ RUN wget -qO- https://github.com/thedodd/trunk/releases/download/v0.14.0/trunk-x
 FROM debian:buster-slim
 
 COPY --from=backend-builder /app/target/release/tree-backend /app/tree-backend
-COPY --from=frontend-builder /app/tree-frontend/dist/ /public/
+COPY --from=frontend-builder /app/tree-frontend/dist/ /static/
 
 ENTRYPOINT ["/app/tree-backend"]
