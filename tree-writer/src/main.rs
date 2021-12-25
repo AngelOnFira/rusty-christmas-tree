@@ -6,7 +6,7 @@ use tree_data_schema::{Renderers, FRAME_RATE};
 
 mod renderers;
 use crate::renderers::{
-    ender_logo, rainbow_wave, red_wave, snow, space_fight, template, tree_canvas::TreeCanvas,
+    ender_logo, rainbow_wave, red_wave, snow, space_fight, template, sell_a_bee, tree_canvas::TreeCanvas,
 };
 
 fn create_spi() -> io::Result<Spidev> {
@@ -48,7 +48,7 @@ fn main() {
 
     let mut tick = 0;
 
-    let renderer = Renderers::Snow;
+    let renderer = Renderers::SellABee;
 
     loop {
         thread::sleep(Duration::from_millis(1000 / FRAME_RATE));
@@ -61,6 +61,7 @@ fn main() {
             Renderers::EnderLogo => ender_logo::draw(tick),
             Renderers::SpaceFight => space_fight::draw(tick),
             Renderers::RainbowWave => rainbow_wave::draw(tick),
+            Renderers::SellABee => sell_a_bee::draw(tick),
         };
 
         full_duplex(&mut spi, tree_canvas).unwrap();

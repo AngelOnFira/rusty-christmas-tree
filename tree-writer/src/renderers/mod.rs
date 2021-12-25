@@ -9,6 +9,7 @@ pub mod red_wave;
 pub mod snow;
 pub mod space_fight;
 pub mod template;
+pub mod sell_a_bee;
 
 pub mod tree_canvas;
 
@@ -21,5 +22,6 @@ pub fn visualize_renderer(tick: u64, renderer: Renderers) -> TreeCanvas {
         Renderers::Snow => snow::draw(tick),
         Renderers::SpaceFight => space_fight::draw(tick),
         Renderers::RainbowWave => rainbow_wave::draw(tick),
+        Renderers::SellABee => sell_a_bee::draw(tick),
     }
 }

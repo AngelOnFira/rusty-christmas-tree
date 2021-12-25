@@ -13,6 +13,7 @@ pub enum Renderers {
     EnderLogo,
     SpaceFight,
     RainbowWave,
+    SellABee,
 }
 
 impl fmt::Display for Renderers {
@@ -25,6 +26,7 @@ impl fmt::Display for Renderers {
             Renderers::EnderLogo => write!(f, "Ender Logo"),
             Renderers::SpaceFight => write!(f, "Space Fight"),
             Renderers::RainbowWave => write!(f, "Rainbow Wave"),
+            Renderers::SellABee => write!(f, "Sell A Bee"),
         }
     }
 }
