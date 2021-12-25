@@ -10,6 +10,7 @@ pub mod red_wave;
 pub mod snow;
 pub mod space_fight;
 pub mod template;
+pub mod JWST;
 
 pub mod tree_canvas;
 
@@ -23,5 +24,6 @@ pub fn visualize_renderer(tick: u64, renderer: Renderers) -> TreeCanvas {
         Renderers::SpaceFight => space_fight::draw(tick),
         Renderers::RainbowWave => rainbow_wave::draw(tick),
         Renderers::Mario => mario::draw(tick),
+        Renderers::JWST=>JWST::draw(tick)
     }
 }

@@ -14,6 +14,7 @@ pub enum Renderers {
     SpaceFight,
     RainbowWave,
     Mario,
+    JWST,
 }
 
 impl fmt::Display for Renderers {
@@ -27,6 +28,7 @@ impl fmt::Display for Renderers {
             Renderers::SpaceFight => write!(f, "Space Fight"),
             Renderers::RainbowWave => write!(f, "Rainbow Wave"),
             Renderers::Mario => write!(f, "Mario"),
+            Renderers::JWST => write!(f, "JWST"),
         }
     }
 }
@@ -55,6 +57,7 @@ pub fn renderer_strings() -> Vec<Renderer> {
         (Renderers::SpaceFight, "https://cdn.discordapp.com/attachments/444005079410802699/924071696955215872/spacefight.mp4"),
         (Renderers::RainbowWave, "https://cdn.discordapp.com/attachments/444005079410802699/924071697387245598/RainbowWave.mp4"),
         (Renderers::Mario, "https://cdn.discordapp.com/attachments/444005079410802699/924071697630527568/Mario.mp4"),
+        (Renderers::JWST, "https://cdn.discordapp.com/attachments/444005079410802699/924071697630527568/Mario.mp4"),
     ];
 
     renderers
