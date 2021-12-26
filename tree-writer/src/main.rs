@@ -51,6 +51,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut spi = create_spi().unwrap();
 
     let renderer = Arc::new(Mutex::new(Renderers::Snow));
+    
+    #[cfg(target_arch = "arm")]
+    panic!("testing");
+
 
     // This task will check the web server every second to see if there is a new
     // renderer
