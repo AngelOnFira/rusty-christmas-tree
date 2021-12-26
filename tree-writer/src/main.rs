@@ -2,6 +2,7 @@ use log::info;
 #[cfg(target_arch = "arm")]
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
 use std::{
+    io,
     sync::{Arc, Mutex},
     thread,
     time::Duration,
