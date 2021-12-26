@@ -1,5 +1,4 @@
-use std::cmp::min;
-use std::fs;
+use std::{cmp::min, fs};
 
 use super::{Pixel, TreeCanvas};
 use serde::Deserialize;
@@ -26,4 +25,4 @@ pub fn draw(tick: u64) -> TreeCanvas {
     }
 
     canvas
-} 
+}
