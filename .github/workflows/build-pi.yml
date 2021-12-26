@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
-          toolchain: nigthly
+          toolchain: nightly-2021-12-19
           target: armv7-unknown-linux-gnueabihf
           override: true
 
