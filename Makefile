@@ -32,3 +32,6 @@ setup-web:
 deploy:
 	du -sk target/armv7-unknown-linux-gnueabihf/release/rusty-tree
 	scp target/armv7-unknown-linux-gnueabihf/release/rusty-tree tree:~/rusty-tree
+
+move:
+	scp rusty-tree tree:~/rusty-tree

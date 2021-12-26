@@ -1,7 +1,7 @@
 use log::info;
+#[cfg(target_arch = "arm")]
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
 use std::{
-    io,
     sync::{Arc, Mutex},
     thread,
     time::Duration,
@@ -11,8 +11,8 @@ use tree_data_schema::{Renderers, FRAME_RATE};
 
 mod renderers;
 use crate::renderers::{
-    ender_logo, mario, rainbow_wave, red_wave, snow, space_fight, template,
-    tree_canvas::TreeCanvas, JWST,
+    ender_logo, jwst, mario, rainbow_wave, red_wave, snow, space_fight, template,
+    tree_canvas::TreeCanvas,
 };
 
 // Set up the SPI interface
@@ -51,10 +51,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut spi = create_spi().unwrap();
 
     let renderer = Arc::new(Mutex::new(Renderers::Snow));
-    
+
     #[cfg(target_arch = "arm")]
     panic!("testing");
-
 
     // This task will check the web server every second to see if there is a new
     // renderer
@@ -106,7 +105,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             Renderers::SpaceFight => space_fight::draw(tick),
             Renderers::RainbowWave => rainbow_wave::draw(tick),
             Renderers::Mario => mario::draw(tick),
-            Renderers::JWST => JWST::draw(tick),
+            Renderers::JWST => jwst::draw(tick),
         };
 
         #[cfg(target_arch = "arm")]

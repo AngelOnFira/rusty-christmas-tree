@@ -1,5 +1,4 @@
 use super::{Pixel, TreeCanvas};
-use std::cmp::min;
 
 use rand::Rng;
 use std::sync::{Arc, Mutex};
@@ -57,7 +56,7 @@ impl Thingy {
 
         // every 3 frames, add a few snowflakes
         if tick % 3 == 0 {
-            for i in 0..rand::thread_rng().gen_range(0..3) {
+            for _ in 0..rand::thread_rng().gen_range(0..3) {
                 self.flakes.push(gen_flake());
             }
         }

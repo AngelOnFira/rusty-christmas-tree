@@ -1,5 +1,3 @@
-use std::cmp::min;
-
 use super::{Pixel, TreeCanvas};
 
 // Name: <Name for this renderer>

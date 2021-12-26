@@ -1,7 +1,4 @@
-use std::{
-    cmp::min,
-    sync::{Arc, Mutex},
-};
+use std::sync::{Arc, Mutex};
 
 use super::{Pixel, TreeCanvas};
 
@@ -35,27 +32,27 @@ pub fn draw(tick: u64) -> TreeCanvas {
         *green_val += *green_state;
         *blue_val += *blue_state;
 
-        if (*red_val == 235 && *green_val == 235 && *blue_val == 52) {
+        if *red_val == 235 && *green_val == 235 && *blue_val == 52 {
             *green_state = 0;
             *red_state = -1;
         }
-        if (*red_val == 52 && *green_val == 235 && *blue_val == 52) {
+        if *red_val == 52 && *green_val == 235 && *blue_val == 52 {
             *red_state = 0;
             *blue_state = 1;
         }
-        if (*red_val == 52 && *green_val == 235 && *blue_val == 235) {
+        if *red_val == 52 && *green_val == 235 && *blue_val == 235 {
             *blue_state = 0;
             *green_state = -1;
         }
-        if (*red_val == 52 && *green_val == 52 && *blue_val == 235) {
+        if *red_val == 52 && *green_val == 52 && *blue_val == 235 {
             *green_state = 0;
             *red_state = 1;
         }
-        if (*red_val == 235 && *green_val == 52 && *blue_val == 235) {
+        if *red_val == 235 && *green_val == 52 && *blue_val == 235 {
             *red_state = 0;
             *blue_state = -1;
         }
-        if (*red_val == 235 && *green_val == 52 && *blue_val == 52) {
+        if *red_val == 235 && *green_val == 52 && *blue_val == 52 {
             *blue_state = 0;
             *green_state = 1;
         }

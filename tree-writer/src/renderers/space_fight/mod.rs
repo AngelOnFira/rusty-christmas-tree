@@ -1,11 +1,7 @@
 use super::{Pixel, TreeCanvas};
-use std::cmp::min;
 
 use rand::Rng;
 use std::sync::{Arc, Mutex};
-
-const X_MAX: usize = 19;
-const Y_MAX: usize = 75;
 
 const MAX_SHIPS: usize = 10;
 const SHIP_SHOOT_TIMER: i8 = 10;
@@ -99,7 +95,6 @@ impl SpaceFight {
 
             // check collision with other ships
             let ship_bounds = ship.bounds();
-            let mut collision = false;
             for (oi, os) in ships_cloned.iter().enumerate() {
                 if i == oi {
                     continue;
@@ -111,13 +106,11 @@ impl SpaceFight {
                     continue;
                 }
 
-                //println!("ship1 {} ship2 {}", i, oi);
                 if let Some(bang) = check_intersects(&ship_bounds, &os.bounds()) {
                     ship_remove_indices.push(i);
                     ship_remove_indices.push(oi);
                     explosions.push(Explosion::new(bang.0, bang.1));
 
-                    collision = true;
                     break;
                 }
             }
@@ -306,7 +299,7 @@ impl SpaceStar {
         // println!("adding star");
         Self { x, y: 0 }
     }
-    fn update(&mut self, tick: u64) {
+    fn update(&mut self, _tick: u64) {
         self.y += 5;
     }
 
@@ -352,7 +345,7 @@ impl Ship {
         ]
     }
 
-    fn update(&mut self, tick: u64, game: &mut SpaceFight) {
+    fn update(&mut self, _tick: u64, game: &mut SpaceFight) {
         if self.going_up {
             self.y -= 1
         } else {
@@ -407,7 +400,7 @@ impl Bullet {
         ]
     }
 
-    fn update(&mut self, tick: u64, game: &mut SpaceFight) {
+    fn update(&mut self, _tick: u64, _game: &mut SpaceFight) {
         if self.going_up {
             self.y -= BULLET_SPEED
         } else {
@@ -447,7 +440,7 @@ impl Explosion {
         }
     }
 
-    fn update(&mut self, tick: u64, game: &mut SpaceFight) {
+    fn update(&mut self, _tick: u64, _game: &mut SpaceFight) {
         if self.growing {
             self.size += 1;
         } else {

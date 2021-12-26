@@ -1,5 +1,3 @@
-use std::cmp::min;
-
 use super::{Pixel, TreeCanvas};
 
 // Name: Mario
