@@ -1,14 +1,11 @@
-use std::{cmp::min, fs};
-
 use super::{Pixel, TreeCanvas};
-use serde::Deserialize;
 use serde_json;
 
 // Name: Red Wave
 // Description: A basic red wave across the screen
 // Author: Forest Anderson
 
-pub fn draw(tick: u64) -> TreeCanvas {
+pub fn draw(_tick: u64) -> TreeCanvas {
     let mut canvas = TreeCanvas::new();
 
     let pixel_json = include_str!("jwst.json");

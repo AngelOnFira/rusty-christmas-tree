@@ -1,4 +1,5 @@
 use log::info;
+#[cfg(target_arch = "arm")]
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
 use std::{
     io,
@@ -11,12 +12,12 @@ use tree_data_schema::{Renderers, FRAME_RATE};
 
 mod renderers;
 use crate::renderers::{
-    ender_logo, mario, rainbow_wave, red_wave, snow, space_fight, template,
-    tree_canvas::TreeCanvas, JWST,
+    ender_logo, jwst, mario, rainbow_wave, red_wave, snow, space_fight, template,
+    tree_canvas::TreeCanvas,
 };
 
-#[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
 // Set up the SPI interface
+#[cfg(target_arch = "arm")]
 fn create_spi() -> io::Result<Spidev> {
     let mut spi = Spidev::open("/dev/spidev0.0")?;
     let options = SpidevOptions::new()
@@ -28,8 +29,8 @@ fn create_spi() -> io::Result<Spidev> {
     Ok(spi)
 }
 
-#[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
 // Send the data to the SPI interface
+#[cfg(target_arch = "arm")]
 fn full_duplex(spi: &mut Spidev, tree_canvas: TreeCanvas) -> io::Result<()> {
     let mut rx_buf: [u8; 4500] = [0; 4500];
     let tx_buf = tree_canvas.convert_to_buffer();
@@ -47,7 +48,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .filter_level(log::LevelFilter::Info)
         .init();
 
-    #[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
+    #[cfg(target_arch = "arm")]
     let mut spi = create_spi().unwrap();
 
     let renderer = Arc::new(Mutex::new(Renderers::Snow));
@@ -102,10 +103,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             Renderers::SpaceFight => space_fight::draw(tick),
             Renderers::RainbowWave => rainbow_wave::draw(tick),
             Renderers::Mario => mario::draw(tick),
-            Renderers::JWST => JWST::draw(tick),
+            Renderers::JWST => jwst::draw(tick),
         };
 
-        #[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
+        #[cfg(target_arch = "arm")]
         full_duplex(&mut spi, tree_canvas).unwrap();
 
         tick += 1;

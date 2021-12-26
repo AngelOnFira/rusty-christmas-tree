@@ -1,7 +1,4 @@
-use std::{cmp::min, fs};
-
 use super::{Pixel, TreeCanvas};
-use serde::Deserialize;
 use serde_json;
 
 // Name: <Name for this renderer>
