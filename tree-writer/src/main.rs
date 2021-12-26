@@ -1,10 +1,13 @@
 use log::info;
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
-use std::{io, thread, time::Duration};
+use std::{
+    io,
+    sync::{Arc, Mutex},
+    thread,
+    time::Duration,
+};
 use tokio::task;
 use tree_data_schema::{Renderers, FRAME_RATE};
-
-// use mun_runtime::{invoke_fn, RuntimeBuilder};
 
 mod renderers;
 use crate::renderers::{
@@ -13,6 +16,7 @@ use crate::renderers::{
 };
 
 #[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
+// Set up the SPI interface
 fn create_spi() -> io::Result<Spidev> {
     let mut spi = Spidev::open("/dev/spidev0.0")?;
     let options = SpidevOptions::new()
@@ -25,6 +29,7 @@ fn create_spi() -> io::Result<Spidev> {
 }
 
 #[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
+// Send the data to the SPI interface
 fn full_duplex(spi: &mut Spidev, tree_canvas: TreeCanvas) -> io::Result<()> {
     let mut rx_buf: [u8; 4500] = [0; 4500];
     let tx_buf = tree_canvas.convert_to_buffer();
@@ -36,18 +41,6 @@ fn full_duplex(spi: &mut Spidev, tree_canvas: TreeCanvas) -> io::Result<()> {
     Ok(())
 }
 
-// TODO: Try this when we figure out Mun arrays
-// fn load_from_mun() {
-//     let mut runtime = RuntimeBuilder::new("../../tree-script/target/mod.munlib")
-//         .spawn()
-//         .expect("Failed to spawn Runtime");
-
-//     runtime.borrow_mut().update();
-//     let runtime_ref = runtime.borrow();
-
-//     let tx_buf: i32 = invoke_fn!(runtime_ref, "build_array", tick).unwrap();
-// }
-
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     pretty_env_logger::formatted_builder()
@@ -57,36 +50,34 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     #[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
     let mut spi = create_spi().unwrap();
 
-    let mut tick = 0;
+    let renderer = Arc::new(Mutex::new(Renderers::Snow));
 
-    let mut renderer = Renderers::Snow;
-
+    // This task will check the web server every second to see if there is a new
+    // renderer
+    let renderer_clone = renderer.clone();
     task::spawn(async move {
         let mut last_fail = false;
         loop {
-            renderer = match reqwest::get("https://tree.dendropho.be/current_renderer").await {
+            match reqwest::get("https://tree.dendropho.be/current_renderer").await {
                 Ok(response) => {
-                    let mut new_renderer = renderer;
                     if let Ok(body) = &response.text().await {
                         if let Ok(unwrapped_renderer) = serde_json::from_str::<Renderers>(body) {
-                            new_renderer = unwrapped_renderer;
+                            let mut renderer = renderer_clone.lock().unwrap();
+                            if *renderer != unwrapped_renderer {
+                                *renderer = unwrapped_renderer;
+                                info!("New renderer: {}", unwrapped_renderer);
+                            }
                         }
-                    }
-
-                    if new_renderer != renderer {
-                        info!("Changing renderer to {}", new_renderer);
                     }
 
                     // Reset last fail so we only show network errors once
                     last_fail = false;
-                    new_renderer
                 }
                 Err(e) => {
                     if !last_fail {
                         info!("Failed to get renderer: {}", e);
                         last_fail = true;
                     }
-                    renderer
                 }
             };
 
@@ -95,7 +86,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     });
 
+    // Loop forever, track the number of ticks that have elapsed
+    let mut tick = 0;
     loop {
+        thread::sleep(Duration::from_millis(1000 / FRAME_RATE));
+
+        let renderer = *renderer.lock().unwrap();
+
         // Add your enum variant here (and remember to import it above)
         let tree_canvas: TreeCanvas = match renderer {
             Renderers::RedWave => red_wave::draw(tick),
