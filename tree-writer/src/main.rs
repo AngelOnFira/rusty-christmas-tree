@@ -1,6 +1,7 @@
 use log::info;
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
 use std::{io, thread, time::Duration};
+use tokio::task;
 use tree_data_schema::{Renderers, FRAME_RATE};
 
 // use mun_runtime::{invoke_fn, RuntimeBuilder};
@@ -11,6 +12,7 @@ use crate::renderers::{
     tree_canvas::TreeCanvas, JWST,
 };
 
+#[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
 fn create_spi() -> io::Result<Spidev> {
     let mut spi = Spidev::open("/dev/spidev0.0")?;
     let options = SpidevOptions::new()
@@ -22,6 +24,7 @@ fn create_spi() -> io::Result<Spidev> {
     Ok(spi)
 }
 
+#[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
 fn full_duplex(spi: &mut Spidev, tree_canvas: TreeCanvas) -> io::Result<()> {
     let mut rx_buf: [u8; 4500] = [0; 4500];
     let tx_buf = tree_canvas.convert_to_buffer();
@@ -51,23 +54,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .filter_level(log::LevelFilter::Info)
         .init();
 
+    #[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
     let mut spi = create_spi().unwrap();
 
     let mut tick = 0;
 
     let mut renderer = Renderers::Snow;
 
-    let mut last_fail = false;
-
-    loop {
-        thread::sleep(Duration::from_millis(1000 / FRAME_RATE));
-
-        // Make a request to get the current renderer
-        // once a second
-        if tick % (FRAME_RATE * 15) == 0 {
-            renderer = match reqwest::get("https://tree.dendropho.be/current_renderer")
-                .await
-            {
+    task::spawn(async move {
+        let mut last_fail = false;
+        loop {
+            renderer = match reqwest::get("https://tree.dendropho.be/current_renderer").await {
                 Ok(response) => {
                     let mut new_renderer = renderer;
                     if let Ok(body) = &response.text().await {
@@ -92,8 +89,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                     renderer
                 }
             };
-        }
 
+            // Sleep for a second
+            thread::sleep(Duration::from_secs(1));
+        }
+    });
+
+    loop {
         // Add your enum variant here (and remember to import it above)
         let tree_canvas: TreeCanvas = match renderer {
             Renderers::RedWave => red_wave::draw(tick),
@@ -106,7 +108,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             Renderers::JWST => JWST::draw(tick),
         };
 
+        #[cfg(target_arch = "arm-unknown-linux-gnueabihf")]
         full_duplex(&mut spi, tree_canvas).unwrap();
+
         tick += 1;
     }
 }
