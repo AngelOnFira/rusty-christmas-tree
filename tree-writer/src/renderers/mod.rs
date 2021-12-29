@@ -8,10 +8,10 @@ pub mod jwst;
 pub mod mario;
 pub mod rainbow_wave;
 pub mod red_wave;
+pub mod sell_a_bee;
 pub mod snow;
 pub mod space_fight;
 pub mod template;
-pub mod sell_a_bee;
 
 pub mod tree_canvas;
 
