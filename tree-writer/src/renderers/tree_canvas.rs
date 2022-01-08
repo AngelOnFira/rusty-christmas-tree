@@ -44,10 +44,12 @@ impl TreeCanvas {
         self.pixels[x * 75 + y]
     }
 
+    #[allow(unused)]
     pub fn get_canvas(&self) -> &[Pixel; 1500] {
         &self.pixels
     }
 
+    #[allow(unused)]
     pub fn convert_to_buffer(&self) -> [u8; 4500] {
         let mut buffer: [u8; 4500] = [0; 4500];
         let column_height = 75;

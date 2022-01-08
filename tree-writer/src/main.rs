@@ -1,6 +1,7 @@
 use log::info;
 #[cfg(target_arch = "arm")]
 use spidev::{SpiModeFlags, Spidev, SpidevOptions, SpidevTransfer};
+#[allow(unused)]
 use std::{
     io,
     sync::{Arc, Mutex},
@@ -12,8 +13,8 @@ use tree_data_schema::{Renderers, FRAME_RATE};
 
 mod renderers;
 use crate::renderers::{
-    ender_logo, jwst, mario, rainbow_wave, red_wave, snow, space_fight, template,
-    tree_canvas::TreeCanvas, sell_a_bee
+    ender_logo, jwst, mario, rainbow_wave, red_wave, sell_a_bee, snow, space_fight, template,
+    tree_canvas::TreeCanvas,
 };
 
 // Set up the SPI interface
@@ -95,6 +96,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let renderer = *renderer.lock().unwrap();
 
         // Add your enum variant here (and remember to import it above)
+        #[allow(unused)]
         let tree_canvas: TreeCanvas = match renderer {
             Renderers::RedWave => red_wave::draw(tick),
             Renderers::Template => template::draw(tick),

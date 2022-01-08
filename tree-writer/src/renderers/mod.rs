@@ -15,6 +15,7 @@ pub mod template;
 
 pub mod tree_canvas;
 
+#[allow(unused)]
 pub fn visualize_renderer(tick: u64, renderer: Renderers) -> TreeCanvas {
     // Add your enum variant here
     match renderer {
