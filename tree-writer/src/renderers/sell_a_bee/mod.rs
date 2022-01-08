@@ -1,9 +1,10 @@
-use std::cmp::min;
+use std::io::Read;
 
 use super::{Pixel, TreeCanvas};
 
 use std::collections::HashMap;
 
+use flate2::read::GzDecoder;
 use serde::{de::value::MapDeserializer, Deserialize};
 use serde_json::{self, Value};
 
@@ -21,10 +22,27 @@ struct Video {
 // Description: Celebi's got some new moves in this render!
 // Author: Liam Henderson
 #[cached(size = 1)]
-fn get_video(n: u8) -> Video {
-    let content = include_str!("video.json");
-    let data: HashMap<&str, Value> = serde_json::from_str(&content).unwrap();
-    Video::deserialize(MapDeserializer::new(data.into_iter())).unwrap()
+fn get_video(_n: u8) -> Video {
+    // Compress the json file. Could be useful if another file needs to be
+    // compressed.
+    //
+    // let json_video = include_str!("video.json"); let mut compressed_file =
+    // File::create("video.json.gz").unwrap(); let mut e = GzEncoder::new(&mut
+    // compressed_file, flate2::Compression::default());
+    // e.write_all(json_video.as_bytes()).unwrap();
+
+    let compressed_content = include_bytes!("video.json.gz");
+
+    // Decompress the JSON
+    let mut decompressed_content = String::new();
+    GzDecoder::new(&compressed_content[..])
+        .read_to_string(&mut decompressed_content)
+        .unwrap();
+
+    let data: HashMap<&str, Value> = serde_json::from_str(&decompressed_content).unwrap();
+    let video = Video::deserialize(MapDeserializer::new(data.into_iter())).unwrap();
+
+    video
 }
 
 pub fn draw(tick: u64) -> TreeCanvas {
