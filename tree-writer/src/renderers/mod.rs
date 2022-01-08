@@ -8,6 +8,7 @@ pub mod jwst;
 pub mod mario;
 pub mod rainbow_wave;
 pub mod red_wave;
+pub mod sell_a_bee;
 pub mod snow;
 pub mod space_fight;
 pub mod template;
@@ -25,5 +26,6 @@ pub fn visualize_renderer(tick: u64, renderer: Renderers) -> TreeCanvas {
         Renderers::RainbowWave => rainbow_wave::draw(tick),
         Renderers::Mario => mario::draw(tick),
         Renderers::JWST => jwst::draw(tick),
+        Renderers::SellABee => sell_a_bee::draw(tick),
     }
 }

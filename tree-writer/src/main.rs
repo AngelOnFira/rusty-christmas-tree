@@ -13,7 +13,7 @@ use tree_data_schema::{Renderers, FRAME_RATE};
 mod renderers;
 use crate::renderers::{
     ender_logo, jwst, mario, rainbow_wave, red_wave, snow, space_fight, template,
-    tree_canvas::TreeCanvas,
+    tree_canvas::TreeCanvas, sell_a_bee
 };
 
 // Set up the SPI interface
@@ -104,6 +104,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             Renderers::RainbowWave => rainbow_wave::draw(tick),
             Renderers::Mario => mario::draw(tick),
             Renderers::JWST => jwst::draw(tick),
+            Renderers::SellABee => sell_a_bee::draw(tick),
         };
 
         #[cfg(target_arch = "arm")]
