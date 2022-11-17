@@ -39,7 +39,7 @@ pub fn draw(tick: u64) -> TreeCanvas {
                     + 100.0
                     // ^^ Add 100 to get a number between 100 and 250
                 ) as u8, // Convert the float to an 8 bit integer
-                g: 0,
+                g: 20,
                 b: 0,
             };
             canvas.set_pixel(x, y, this_pixel)
