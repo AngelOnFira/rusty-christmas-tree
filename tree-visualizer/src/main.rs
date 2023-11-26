@@ -35,7 +35,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
     // Clear the background to black.
     draw.background().color(BLACK);
 
-    let tree_canvas = visualize_renderer(frame.nth(), Renderers::Template);
+    let tree_canvas = visualize_renderer(frame.nth(), Renderers::Mario);
     let column_height = 75;
 
     // Draw a 20x75 grid of rectangles that are each 5x5 pixels. The colour of
@@ -47,6 +47,10 @@ fn view(app: &App, model: &Model, frame: Frame) {
     for (i, pixel) in tree_canvas.get_canvas().iter().enumerate() {
         let x = i / column_height;
         let y = i % column_height;
+
+        // Offset for 2023 hardware accident
+        // https://github.com/AngelOnFira/rusty-christmas-tree/issues/17
+        let x = (x + 8) % 20;
 
         // TODO: Make the offsets based on the window size
         draw.rect()

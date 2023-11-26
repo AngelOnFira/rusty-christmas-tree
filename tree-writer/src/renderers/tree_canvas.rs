@@ -30,6 +30,10 @@ impl TreeCanvas {
             panic!("Tried to set pixel at y={}, while y is max 75", y);
         }
 
+        // Offset for 2023 hardware accident
+        // https://github.com/AngelOnFira/rusty-christmas-tree/issues/17
+        let x = (x + 8) % 20;
+
         self.pixels[x * 75 + y] = pixel;
     }
 
@@ -40,6 +44,10 @@ impl TreeCanvas {
         if y >= 75 {
             panic!("Tried to get pixel at y={}, while y is max 75", y);
         }
+
+        // Offset for 2023 hardware accident
+        // https://github.com/AngelOnFira/rusty-christmas-tree/issues/17
+        let x = (x + 8) % 20;
 
         self.pixels[x * 75 + y]
     }
